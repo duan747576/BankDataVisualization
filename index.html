@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>背景连线动画</title>
+    <title>Bank</title>
 
     <style>
         html,
@@ -27,7 +27,7 @@
         canvas {
             display: block;
         }
-
+/**************************************************************/
         .main {
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
@@ -43,41 +43,88 @@
             border-style: outset;
             border-color: rgb(172, 172, 172);
         }
-
+/**************************************************************/
         #mod1tile1 {
             position: absolute;
             left: 0;
             top: 0;
             border-top-left-radius: 20px;
             width: 70%;
-            height: 80%;
+            height: 80%;display: none;
         }
-
         #mod1tile2 {
             position: absolute;
             left: 70%;
             top: 0;
             width: 30%;
-            height: 50%;
+            height: 50%;display: none;
         }
-
         #mod1tile3 {
             position: absolute;
             left: 70%;
             top: 50%;
             width: 30%;
-            height: 50%;
-        }
-
+            height: 50%;display: none;
+        }        
         #mod1tile4 {
             position: absolute;
             left: 0%;
             top: 80%;
             width: 70%;
             height: 20%;
-            border-bottom-left-radius: 20px;
+            border-bottom-left-radius: 20px;display: none;
         }
-
+/**************************************************************/
+        #mod2tile1 {
+            position: absolute;
+            left:0;top:0;
+            width:25%;height:50%;padding-top:10px;padding-left:10px;
+            border-top-left-radius: 20px;
+        }
+        #mod2tile2 {
+            position: absolute;
+            left:0;top:50%;
+            width:25%;height:50%;
+            background: #006;border-bottom-left-radius: 20px;
+        }
+        #mod2tile3 {
+            position: absolute;
+            left:25%;top:0;
+            width:55%;height:100%;
+            background: #606;
+        }
+        #mod2tile4 {
+            position: absolute;
+            left:80%;top:0;
+            width:20%;height:100%;
+            background: #606;
+        }
+        .usertypeswitch {
+            width:100%;height:100%;
+            background: #500;
+        }
+        .usertypecontent {
+            display:none;
+            width: 100%;height:86%;
+            background: #055;
+        }
+        .usertypetitle {
+            width:100%;height:10%;
+            border:1px inset #fff;box-sizing: border-box;
+        }
+        #usertypeswitch1 {
+            width:100%;height:14%;
+            background: #500;
+        }
+        #usertypecontent1 {
+            width: 100%;height:86%;
+            background: #055;
+        }
+        #usertypetitle1 {
+            width:100%;height:70%;
+            border:1px inset #fff;box-sizing: border-box;
+        }
+/**************************************************************/
         #mod5tile1 {
             position: absolute;
             left: 0;
@@ -88,7 +135,6 @@
             height: 100%;
             display: none;
         }
-
         #mod5tile2 {
             position: absolute;
             left: 40%;
@@ -97,7 +143,6 @@
             height: 45%;
             display: none;
         }
-
         #mod5tile3 {
             position: absolute;
             left: 40%;
@@ -106,7 +151,7 @@
             height: 45%;
             display: none;
         }
-
+/**************************************************************/
         #menu {
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
@@ -121,8 +166,7 @@
             border-style: outset;
             border-color: rgb(172, 172, 172);
         }
-
-        #type1 {
+        #mode1 {
             padding-right: 20px;
             border-top-right-radius: 20px;
             width: 100%;
@@ -130,32 +174,28 @@
             margin: 0;
             background: rgba(32, 32, 32, 0.8);
         }
-
-        #type2 {
+        #mode2 {
             padding-right: 20px;
             width: 100%;
             height: 18.7%;
             margin: 0;
             background: rgba(40, 40, 40, 0.8);
         }
-
-        #type3 {
+        #mode3 {
             padding-right: 20px;
             width: 100%;
             height: 18.6%;
             margin: 0;
             background: rgba(32, 32, 32, 0.8);
         }
-
-        #type4 {
+        #mode4 {
             padding-right: 20px;
             width: 100%;
             height: 18.7%;
             margin: 0;
             background: rgba(40, 40, 40, 0.8);
         }
-
-        #type5 {
+        #mode5 {
             padding-right: 20px;
             border-bottom-right-radius: 20px;
             width: 100%;
@@ -163,7 +203,10 @@
             margin: 0;
             background: rgba(32, 32, 32, 0.8);
         }
-
+        .modename {
+            color: rgb(255, 255, 255);
+        }
+/**************************************************************/
         #canvas {
             z-index: 1;
         }
@@ -176,7 +219,7 @@
             filter: blur(3px);
             opacity: 0.6;
         }
-
+/**************************************************************/
         .title {
 
             position: absolute;
@@ -185,7 +228,6 @@
             left: 10%;
             top: 2%;
         }
-
         #titletext {
             color: rgb(41, 41, 41);
             font-size: 2.5em;
@@ -193,10 +235,7 @@
             white-space: nowrap;
             text-shadow: -1px -1px rgb(185, 185, 185), 1px 1px rgb(109, 109, 109);
         }
-
-        .typename {
-            color: rgb(255, 255, 255);
-        }
+/**************************************************************/
     </style>
 
 </head>
@@ -218,6 +257,24 @@
         <div class=mod2 id="mod2tile1"></div>
         <div class=mod2 id="mod2tile2"></div>
         <div class=mod2 id="mod2tile3"></div>
+        <div class=mod2 id="mod2tile4">
+            <div id="usertypetitle1" onmouseover="showinfo(1)">
+                <div id="usertypeswitch1"></div>
+                <div id="usertypecontent1"></div>
+            </div>
+            <div id="usertypetitle2" class="usertypetitle" onmouseover="showinfo(2)">
+                <div id="usertypeswitch2" class="usertypeswitch"></div>
+                <div id="usertypecontent2" class="usertypecontent"></div>
+            </div>
+            <div id="usertypetitle3" class="usertypetitle" onmouseover="showinfo(3)">
+                <div id="usertypeswitch3" class="usertypeswitch"></div>
+                <div id="usertypecontent3" class="usertypecontent"></div>
+            </div>
+            <div id="usertypetitle4" class="usertypetitle" onmouseover="showinfo(4)">
+                    <div id="usertypeswitch4" class="usertypeswitch"></div>
+                    <div id="usertypecontent4" class="usertypecontent"></div>
+            </div>
+        </div>
         <div class=mod3 id="mod3tile1"></div>
         <div class=mod3 id="mod3tile2"></div>
         <div class=mod4 id="mod4tile1"></div>
@@ -227,24 +284,24 @@
     </div>
 
     <div id="menu">
-        <div id="type1">
+        <div id="mode1">
             <div id="top0"></div>
             <div id="top1" onclick="tomode(1)">
-                <p class=typename>个人客户画像</p>
+                <p class=modename>个人客户画像</p>
             </div>
         </div>
-        <div id="type2" onclick="tomode(2)">
-            <p class=typename>群体画像</p>
+        <div id="mode2" onclick="tomode(2)">
+            <p class=modename>群体画像</p>
         </div>
-        <div id="type3" onclick="tomode(3)">
-            <p class=typename>业务热度预测</p>
+        <div id="mode3" onclick="tomode(3)">
+            <p class=modename>业务热度预测</p>
         </div>
-        <div id="type4" onclick="tomode(4)">
-            <p class=typename>轨迹分析</p>
+        <div id="mode4" onclick="tomode(4)">
+            <p class=modename>轨迹分析</p>
         </div>
-        <div id="type5">
+        <div id="mode5">
             <div id="bottom0" onclick="tomode(5)">
-                <p class=typename>支行效益分析</p>
+                <p class=modename>支行效益分析</p>
             </div>
             <div id="bottom1"></div>
         </div>
@@ -252,8 +309,6 @@
 
 
     <script>
-
-
         window.addEventListener("resize", resizeCanvas, false);
         var canvas1 = document.getElementById('canvas');
         var canvas2 = document.getElementById('canvasbg');
@@ -456,7 +511,9 @@
 Original Idea and Design by Luca Luzzatti
 
 Optimizing tips from Benjamin K?stner
-General tips from Salvatore Previti*/</script>
+General tips from Salvatore Previti*/
+    </script>
+
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jnvU9LrC98VKS9oBrGgfKkGzFGCK3TPo"></script>
     <script type="text/javascript">
         // 百度地图API功能
@@ -483,149 +540,8 @@ General tips from Salvatore Previti*/</script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
     <script type="text/javascript">
-        var mod1tile2chart = echarts.init(document.getElementById("mod1tile2"));
-        mod1tile2chartoption = {
-
-            title: {
-                show: true,
-                text: '客户画像雷达图',
-                subtext: '',
-                x: 'center',
-                y: 'top',
-                padding: 10,
-                itemGap: 8,
-                textStyle: { color: "#fff", fontSize: 20 },
-                subtextStyle: { fontSize: 14 }
-            },
-            legend: {
-                data: ['客户画像1', '客户画像2'],
-                top: 'bottom',
-                left: 'center',
-                orient: 'horizontal',
-                textStyle: {
-                    color: "#ffffff",
-                    fontSize: 12
-                }
-            },
-            animationDuration: 1500,
-            animationEasing: 'Linear',
-            animation: true,
-            radar: {
-                name: {
-                    color: '#F0FFF0',
-                    fontSize: 20
-                },
-                center: ['50%', '50%'],
-                radius: '60%',
-                startAngle: 90,
-                splitNumber: 5,
-                axisLine: {
-                    show: true, lineStyle: { width: 1, type: 'solid' }
-                },
-                splitLine: {
-                    show: true, lineStyle: { width: 1, type: 'solid' }
-                },
-                indicator: [
-                    { name: 'Age', min: 20, max: 70 },
-                    { name: 'Education', min: 0, max: 3 },
-                    { name: 'Job', min: 0, max: 10 },
-                    { name: 'Marital', min: 0, max: 3 },
-                    { name: 'Housing', min: 0, max: 1 },
-                    { name: 'Loan', min: 0, max: 1 }
-                ]
-            },
-            tooltip: { trigger: 'axis' },
-            series: [
-                {
-                    type: 'radar',
-                    symbol: 'emptyCircle',
-                    symbolSize: 2,
-                    symbolRotate: 0,
-                    name: '',
-                    data: [{
-                        name: '客户画像1',
-                        value: [30, 3, 5, 2, 1, 0]
-                    },
-                    {
-                        name: '客户画像2',
-                        value: [50, 2, 8, 2, 0, 1]
-                    }
-                    ]
-                }
-            ]
-        };
-        mod1tile2chart.setOption(mod1tile2chartoption, true);
-
-        var mod1tile3chart = echarts.init(document.getElementById("mod1tile3"));
-        mod1tile3chartoption = {
-
-            title: {
-                show: true,
-                text: '客户关系图',
-                subtext: '',
-                x: 'center',
-                y: 'top',
-                padding: 10,
-                itemGap: 8,
-                textStyle:
-                    { color: "#fff", fontSize: 20 },
-                subtextStyle: { fontSize: 14 }
-            },
-
-            animationDuration: 1500,
-            animationEasing: 'Linear',
-            animation: true,
-            tooltip: {},
-            series: [{
-                name: 'Data',
-                type: 'graph',
-                layout: 'circular',
-                circular: { rotateLabel: true },
-                roam: false,
-                focusNodeAdjacency: true,
-                force: { repulsion: 50 },
-                label: { normal: { show: true, position: 'top', textStyle: { color: "#fff", fontSize: 14 } } },
-                lineStyle: {
-                    normal: {
-                        show: true,
-                        color: '#ffff00',
-                        width: 3, curveness: 0.2
-                    }
-                },
-                top: '20%', left: '10%', right: '10%', bottom: '10%',
-                data:
-                    [{ name: 'A1', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 8, value: 8, draggable: true },
-                    { name: 'B7', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
-                    { name: 'A2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
-                    { name: 'B1', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B4', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B5', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B6', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B8', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B9', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B10', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true }],
-                links: [
-                    { source: 'A1', target: 'B1' },
-                    { source: 'A1', target: 'B2' },
-                    { source: 'A1', target: 'A2' },
-                    { source: 'A1', target: 'B4' },
-                    { source: 'A1', target: 'B5' },
-                    { source: 'A1', target: 'B6' },
-                    { source: 'A1', target: 'B7' },
-                    { source: 'B7', target: 'B8' },
-                    { source: 'A1', target: 'B9' },
-                    { source: 'A2', target: 'B10' }]
-
-            }]
-        };
-        mod1tile3chart.setOption(mod1tile3chartoption, true);
-
-
-
         var mod1tile1chart = echarts.init(document.getElementById("mod1tile1"));
         mod1tile1chartoption = {
-
             title: {
                 show: true,
                 text: '客户账户余额走势',
@@ -735,6 +651,182 @@ General tips from Salvatore Previti*/</script>
             ]
         };
         mod1tile1chart.setOption(mod1tile1chartoption, true);
+
+        var mod1tile2chart = echarts.init(document.getElementById("mod1tile2"));
+        mod1tile2chartoption = {
+            title: {
+                show: true,
+                text: '客户画像雷达图',
+                subtext: '',
+                x: 'center',
+                y: 'top',
+                padding: 10,
+                itemGap: 8,
+                textStyle: { color: "#fff", fontSize: 20 },
+                subtextStyle: { fontSize: 14 }
+            },
+            legend: {
+                data: ['客户画像1', '客户画像2'],
+                top: 'bottom',
+                left: 'center',
+                orient: 'horizontal',
+                textStyle: {
+                    color: "#ffffff",
+                    fontSize: 12
+                }
+            },
+            animationDuration: 1500,
+            animationEasing: 'Linear',
+            animation: true,
+            radar: {
+                name: {
+                    color: '#F0FFF0',
+                    fontSize: 20
+                },
+                center: ['50%', '50%'],
+                radius: '60%',
+                startAngle: 90,
+                splitNumber: 5,
+                axisLine: {
+                    show: true, lineStyle: { width: 1, type: 'solid' }
+                },
+                splitLine: {
+                    show: true, lineStyle: { width: 1, type: 'solid' }
+                },
+                indicator: [
+                    { name: 'Age', min: 20, max: 70 },
+                    { name: 'Education', min: 0, max: 3 },
+                    { name: 'Job', min: 0, max: 10 },
+                    { name: 'Marital', min: 0, max: 3 },
+                    { name: 'Housing', min: 0, max: 1 },
+                    { name: 'Loan', min: 0, max: 1 }
+                ]
+            },
+            tooltip: { trigger: 'axis' },
+            series: [
+                {
+                    type: 'radar',
+                    symbol: 'emptyCircle',
+                    symbolSize: 2,
+                    symbolRotate: 0,
+                    name: '',
+                    data: [{
+                        name: '客户画像1',
+                        value: [30, 3, 5, 2, 1, 0]
+                    },
+                    {
+                        name: '客户画像2',
+                        value: [50, 2, 8, 2, 0, 1]
+                    }
+                    ]
+                }
+            ]
+        };
+        mod1tile2chart.setOption(mod1tile2chartoption, true);
+
+        var mod1tile3chart = echarts.init(document.getElementById("mod1tile3"));
+        mod1tile3chartoption = {
+            title: {
+                show: true,
+                text: '客户关系图',
+                subtext: '',
+                x: 'center',
+                y: 'top',
+                padding: 10,
+                itemGap: 8,
+                textStyle:
+                    { color: "#fff", fontSize: 20 },
+                subtextStyle: { fontSize: 14 }
+            },
+
+            animationDuration: 1500,
+            animationEasing: 'Linear',
+            animation: true,
+            tooltip: {},
+            series: [{
+                name: 'Data',
+                type: 'graph',
+                layout: 'circular',
+                circular: { rotateLabel: true },
+                roam: false,
+                focusNodeAdjacency: true,
+                force: { repulsion: 50 },
+                label: { normal: { show: true, position: 'top', textStyle: { color: "#fff", fontSize: 14 } } },
+                lineStyle: {
+                    normal: {
+                        show: true,
+                        color: '#ffff00',
+                        width: 3, curveness: 0.2
+                    }
+                },
+                top: '20%', left: '10%', right: '10%', bottom: '10%',
+                data:
+                    [{ name: 'A1', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 8, value: 8, draggable: true },
+                    { name: 'B7', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
+                    { name: 'A2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
+                    { name: 'B1', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: 'B2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: 'B4', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: 'B5', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: 'B6', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: 'B8', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: 'B9', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: 'B10', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true }],
+                links: [
+                    { source: 'A1', target: 'B1' },
+                    { source: 'A1', target: 'B2' },
+                    { source: 'A1', target: 'A2' },
+                    { source: 'A1', target: 'B4' },
+                    { source: 'A1', target: 'B5' },
+                    { source: 'A1', target: 'B6' },
+                    { source: 'A1', target: 'B7' },
+                    { source: 'B7', target: 'B8' },
+                    { source: 'A1', target: 'B9' },
+                    { source: 'A2', target: 'B10' }]
+
+            }]
+        };
+        mod1tile3chart.setOption(mod1tile3chartoption, true);
+
+        var mod2tile1chart = echarts.init(document.getElementById("mod2tile1"));
+        mod2tile1chartoption = {
+            title: {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        { value: 335, name: '直接访问' },
+                        { value: 310, name: '邮件营销' },
+                        { value: 234, name: '联盟广告' },
+                        { value: 1548, name: '搜索引擎' }
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        mod2tile1chart.setOption(mod2tile1chartoption, true);
 
         var mod5tile2chart = echarts.init(document.getElementById("mod5tile2"));
         mod5tile2chartoption = {
@@ -971,13 +1063,13 @@ General tips from Salvatore Previti*/</script>
             dataZoom: [
                 {
                     show: true,
-                    start: 94,
-                    end: 100
+                    start: 25,
+                    end: 80
                 },
                 {
                     type: 'inside',
-                    start: 94,
-                    end: 100
+                    start: 25,
+                    end: 80
                 },
                 {
                     show: true,
@@ -1006,6 +1098,7 @@ General tips from Salvatore Previti*/</script>
 
 
     </script>
+
     <script type="text/javascript">
         function tomode(modnum) {
             if (modnum == 1) {
@@ -1041,10 +1134,68 @@ General tips from Salvatore Previti*/</script>
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
+                mod2tile1chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
         }, 200)
+
+        function hideinfo(usertype){
+            if (usertype==1)
+            {
+                document.getElementById("usertypetitle1").style.height="10%";
+                document.getElementById("usertypeswitch1").style.height="100%";
+                document.getElementById("usertypecontent1").style.display="none";
+            }
+            else if (usertype==2)
+            {
+                document.getElementById("usertypetitle2").style.height="10%";
+                document.getElementById("usertypeswitch2").style.height="100%";
+                document.getElementById("usertypecontent2").style.display="none";
+            }
+            else if (usertype==3)
+            {
+                document.getElementById("usertypetitle3").style.height="10%";
+                document.getElementById("usertypeswitch3").style.height="100%";
+                document.getElementById("usertypecontent3").style.display="none";
+            }
+            else if (usertype==4)
+            {
+                document.getElementById("usertypetitle4").style.height="10%";
+                document.getElementById("usertypeswitch4").style.height="100%";
+                document.getElementById("usertypecontent4").style.display="none";
+            }
+        }
+        function showinfo(usertype){
+            if (usertype==1)
+            {
+                document.getElementById("usertypetitle1").style.height="70%";
+                document.getElementById("usertypeswitch1").style.height="14%";
+                document.getElementById("usertypecontent1").style.display="block";
+                hideinfo(2);hideinfo(3);hideinfo(4)
+            }
+            else if (usertype==2)
+            {
+                document.getElementById("usertypetitle2").style.height="70%";
+                document.getElementById("usertypeswitch2").style.height="14%";
+                document.getElementById("usertypecontent2").style.display="block";
+                hideinfo(1);hideinfo(3);hideinfo(4)
+            }
+            else if (usertype==3)
+            {
+                document.getElementById("usertypetitle3").style.height="70%";
+                document.getElementById("usertypeswitch3").style.height="14%";
+                document.getElementById("usertypecontent3").style.display="block";
+                hideinfo(1);hideinfo(2);hideinfo(4)
+            }
+            else if (usertype==4)
+            {
+                document.getElementById("usertypetitle4").style.height="70%";
+                document.getElementById("usertypeswitch4").style.height="14%";
+                document.getElementById("usertypecontent4").style.display="block";
+                hideinfo(1);hideinfo(2);hideinfo(3)
+            }
+        }
     </script>
 </body>
 
