@@ -575,15 +575,15 @@ General tips from Salvatore Previti*/
         usertypemap.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
     </script>
 
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="./js/echarts.min.js"></script>
+    <script type="text/javascript" src="./js/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="./js/ecStat.min.js"></script>
+    <script type="text/javascript" src="./js/dataTool.min.js"></script>
+    <script type="text/javascript" src="./js/china.js"></script>
+    <script type="text/javascript" src="./js/world.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+    <script type="text/javascript" src="./js/bmap.min.js"></script>
+    <script type="text/javascript" src="./js/simplex.js"></script>
     <script type="text/javascript">
         //echartsJS
         var mod1tile1chart = echarts.init(document.getElementById("mod1tile1"));
@@ -655,9 +655,13 @@ General tips from Salvatore Previti*/
                         center: ['80%', '30%'],
                         radius: '28%',
                         z: 100,
+                        itemStyle:{
+                            opacity:0.5,
+                            borderColor:'#fff'
+                        },
                         encode: {
                             itemName: 'save',
-                            value: '四月'
+                            value: '六月'
                         }
                     }
                 ]
@@ -671,10 +675,6 @@ General tips from Salvatore Previti*/
                     id: 'pie',
                     label: {
                         formatter: '{b}: {@[' + dimension + ']} ({d}%)'
-                    },
-                    itemStyle:{
-                        opacity:0.5,
-                        borderColor:'#fff'
                     },
                     encode: {
                         value: dimension,
