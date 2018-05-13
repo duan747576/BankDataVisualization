@@ -587,115 +587,103 @@ General tips from Salvatore Previti*/
     <script type="text/javascript">
         //echartsJS
         var mod1tile1chart = echarts.init(document.getElementById("mod1tile1"));
-        mod1tile1chartoption = {
-            title: {
-                show: true,
-                text: '客户账户余额走势',
-                subtext: '',
-                x: 'center',
-                y: 'top',
-                padding: 10,
-                itemGap: 8,
-                textStyle: { color: "#fff", fontSize: 20 },
-                subtextStyle: { fontSize: 14 }
-            },
-            legend: {
-                show: false,
-                data: ['Series1'],
-                selectedMode: 'multiple',
-                x: 'center',
-                y: 'bottom',
-                orient: 'horizontal',
-                padding: 20,
-                itemWidth: 20,
-                itemHeight: 16,
-                itemGap: 16,
-                textStyle: { fontSize: 12 }
-            },
-            grid: {
-                y: '100',
-                x: '50',
-                x2: '60',
-                y2: '50'
-            },
-            animationDuration: 1500,
-            animationEasing: 'Linear',
-            animation: true,
-            tooltip: { trigger: 'axis' },
-            xAxis: {
-                type: 'category',
-                position: 'bottom',
-                name: 'Month',
-                data: ['Apr.', 'May.', 'Jun.', 'Jul.', 'Aug.', 'Sep.'],
-                nameTextStyle: {
-                    color: "#ffff00",
-                    fontSize: 14
+            mod1tile1chartoption = {
+                title: {
+                    text: '账户余额走势'
                 },
-                boundaryGap: false,
-                axisTick: { show: true },
-                axisLine: {
-                    show: true,
-                    lineStyle: { width: 2 }
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
                 },
-                axisLabel: {
-                    show: true,
-                    interval: 0,
-                    rotate: 0,
-                    margin: 10,
-                    textStyle: {
-                        color: "#ffff00", fontSize: 10
+                dataset: {
+                    source: [
+                        ['total', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                        ['all', 12, 21, 33, 35, 17, 49, 12, 6, 14, 60, 18, 4],
+                        ['buy', 44, 14, 21, 1, 4, 40, 13, 14, 46, 12, 41, 26]
+                    ]
+                },
+                legend: {
+                    data: ['all', 'buy']
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: 'all',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: { normal: {} },
+                        seriesLayoutBy: 'row'
+                    },
+                    {
+                        name: 'buy',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: { normal: {} },
+                        seriesLayoutBy: 'row'
+                    },
+                    {
+                        name: '百分比',
+                        type: 'pie',
+                        id: 'pie',
+                        center: ['80%', '30%'],
+                        radius: '28%',
+                        z: 100,
+                        encode: {
+                            itemName: 'save',
+                            value: '四月'
+                        }
+                    }
+                ]
+            };
+        mod1tile1chart.on('updateAxisPointer', function (event) {
+        var xAxisInfo = event.axesInfo[0];
+        if (xAxisInfo) {
+            var dimension = xAxisInfo.value + 1;
+            mod1tile1chart.setOption({
+                series: {
+                    id: 'pie',
+                    label: {
+                        formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                    },
+                    itemStyle:{
+                        opacity:0.5,
+                        borderColor:'#fff'
+                    },
+                    encode: {
+                        value: dimension,
+                        tooltip: dimension
                     }
                 }
-            },
-            yAxis: {
-                type: 'value',
-                position: 'left',
-                name: 'Balance',
-                nameTextStyle: {
-                    color: "#ffff00",
-                    fontSize: 14
-                },
-                boundaryGap: false,
-                axisTick: { show: true },
-                axisLine: {
-                    show: true, lineStyle: { width: 2 }
-                },
-                axisLabel: {
-                    show: true,
-                    interval: 0,
-                    rotate: 0,
-                    margin: 10,
-                    textStyle: { color: "#ffff00", fontSize: 10 }
-                },
-            },
-            series: [
-                {
-                    type: 'line',
-                    stack: '总量',
-                    symbol: 'emptyCircle',
-                    symbolSize: 16,
-                    smooth: false,
-                    itemStyle: {
-                        normal: {
-                            borderWidth: 3,
-                            lineStyle: { width: 1 },
-                            label: {
-                                textStyle: {
-                                    color: '#FFF8DC',
-                                    fontSize: 14
-                                },
-                                show: true,
-                                position: 'top'
-                            }
-                        }
-                    },
-                    symbolRotate: 0,
-                    name: 'Balance',
-                    areaStyle: { normal: {} },
-                    data: [8749.05, 3787.07, 8316.36, 7316.29, 13228.77, 7744.41]
-                }
-            ]
-        };
+            });
+        }
+    });
         mod1tile1chart.setOption(mod1tile1chartoption, true);
 
         var mod1tile2chart = echarts.init(document.getElementById("mod1tile2"));
