@@ -47,24 +47,24 @@
         #mod1tile1 {
             position: absolute;
             left: 0;
-            top: 0;
-            border-top-left-radius: 20px;
+            top: 20%;
+            border-bottom-left-radius: 20px;
             width: 70%;
-            height: 80%;display: none;
+            height: 80%;display: block;
         }
         #mod1tile2 {
             position: absolute;
             left: 70%;
             top: 0;
             width: 30%;
-            height: 50%;display: none;
+            height: 50%;display: block;
         }
         #mod1tile3 {
             position: absolute;
             left: 70%;
             top: 50%;
             width: 30%;
-            height: 50%;display: none;
+            height: 50%;display: block;
         }        
         #mod1tile4 {
             position: absolute;
@@ -72,7 +72,15 @@
             top: 80%;
             width: 70%;
             height: 20%;
-            border-bottom-left-radius: 20px;display: none;
+            border-bottom-left-radius: 20px;display: block;
+        }
+        #mod1tile5 {
+            position: absolutel;
+            left: 0;
+            top: 0;
+            border-top-left-radius: 20px;
+            width:70%;
+            height:20%;display: block;
         }
 /**************************************************************/
 /*****************群体画像板块样式************************/
@@ -81,23 +89,23 @@
             position: absolute;
             left:0;top:0;
             width:25%;height:50%;padding-top:10px;padding-left:10px;
-            border-top-left-radius: 20px;
+            border-top-left-radius: 20px;display: none;
         }
         #mod2tile2 {
             position: absolute;
             left:0;top:50%;
             width:25%;height:50%;
-            background: #006;border-bottom-left-radius: 20px;
+            background: #006;border-bottom-left-radius: 20px;display: none;
         }
         #mod2tile3 {
             position: absolute;
             left:25%;top:0;
-            width:55%;height:100%;
+            width:55%;height:100%;display: none;
         }
         #mod2tile4 {
             position: absolute;
             left:80%;top:0;
-            width:20%;height:100%;
+            width:20%;height:100%;display: none;
         }
 /********************群体画像次级菜单样式**********************/
         .usertypeswitch {
@@ -269,6 +277,7 @@
     </div>
     <div class=main><!--主体-->
         <!--**************各分类板块**************-->
+        <div class=mod1 id="mod1tile5"><h id="userID">123</h></div>
         <div class=mod1 id="mod1tile1"></div>
         <div class=mod1 id="mod1tile2"></div>
         <div class=mod1 id="mod1tile3"></div>
@@ -603,8 +612,8 @@ General tips from Salvatore Previti*/
                 dataset: {
                     source: [
                         ['total', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                        ['all', 12, 21, 33, 35, 17, 49, 12, 6, 14, 60, 18, 4],
-                        ['buy', 44, 14, 21, 1, 4, 40, 13, 14, 46, 12, 41, 26]
+                        ['all', 1076710, 1017220, 1020060, 537059, 22910.6, 24933.7, 6162.26, 49167.6, 203517, 1323.37, 3214.44, 6290.47],
+                        ['buy', 400021, 400021, 400021, 400021, 404085, 409021, 409021, 995152, 1249870, 1254830, 1259280, 1257890]
                     ]
                 },
                 legend: {
@@ -652,7 +661,7 @@ General tips from Salvatore Previti*/
                         name: '百分比',
                         type: 'pie',
                         id: 'pie',
-                        center: ['80%', '30%'],
+                        center: ['85%', '20%'],
                         radius: '28%',
                         z: 100,
                         itemStyle:{
@@ -1259,7 +1268,38 @@ General tips from Salvatore Previti*/
                 hideinfo(1);hideinfo(2);hideinfo(3)
             }
         }
-    </script>
-</body>
+            function changeTotext(obj) {
+                var tdValue = obj.innerText;
+                obj.innerText = "";
+                var txt = document.createElement("input");
+                txt.type = "text";
+                txt.value = tdValue;
+                txt.id = "userIDinput";
+                txt.setAttribute("className", "text");
+                obj.appendChild(txt);
+                txt.select();
+                //obj.style.border = "1px dashed #ff9900"; 
+            }
+            // 取消单元格中的文本框，并将文本框中的值赋给单元格 
+            function cancel(obj) {
+                var txtValue = document.getElementById("userIDinput").value;
+                obj.innerText = txtValue;
+            }
+            /*********************************************/
+            // 事件 
+            document.ondblclick = function () {
+                if (event.srcElement.id == "userID") {
+                    changeTotext(event.srcElement);
+                }
 
-</html>
+            }
+            document.onmouseup = function () {
+                if (document.getElementById("userIDinput") && event.srcElement.id != "userIDinput") {
+                    var obj = document.getElementById("userIDinput").parentElement;
+                    cancel(obj);
+                }
+            } 
+        </script>
+    </body>
+    
+    </html>
