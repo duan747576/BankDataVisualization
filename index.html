@@ -46,41 +46,47 @@
 /**************************************************************/
         #mod1tile1 {
             position: absolute;
-            left: 0;
-            top: 20%;
-            border-bottom-left-radius: 20px;
+            left: 30%;
+            top: 40%;
             width: 70%;
-            height: 80%;display: block;
+            height: 60%;display: block;
         }
         #mod1tile2 {
             position: absolute;
-            left: 70%;
+            left: 35%;
             top: 0;
-            width: 30%;
-            height: 50%;display: block;
+            width: 25%;
+            height: 40%;display: block;
         }
         #mod1tile3 {
             position: absolute;
-            left: 70%;
-            top: 50%;
+            left: 60%;
+            top: 0;
             width: 30%;
-            height: 50%;display: block;
+            height: 40%;display: block;
         }        
         #mod1tile4 {
             position: absolute;
-            left: 0%;
-            top: 80%;
-            width: 70%;
-            height: 20%;
+            left: 0;
+            top: 30%;
+            width: 30%;
+            height: 70%;
             border-bottom-left-radius: 20px;display: block;
         }
         #mod1tile5 {
-            position: absolutel;
+            position: absolute;
             left: 0;
             top: 0;
             border-top-left-radius: 20px;
-            width:70%;
-            height:20%;display: block;
+            width:30%;
+            height:30%;display: block;
+        }
+        #mod1tile6 {
+            position: absolute;
+            left: 90%;
+            top: 0;
+            width:10%;
+            height:40%;display: block;
         }
 /**************************************************************/
 /*****************群体画像板块样式************************/
@@ -282,6 +288,7 @@
         <div class=mod1 id="mod1tile2"></div>
         <div class=mod1 id="mod1tile3"></div>
         <div class=mod1 id="mod1tile4"></div>
+        <div class=mod1 id="mod1tile6"><p>流失预测</p></div>
         <div class=mod2 id="mod2tile1"></div>
         <div class=mod2 id="mod2tile2"></div>
         <div class=mod2 id="mod2tile3"></div>
@@ -571,17 +578,17 @@ General tips from Salvatore Previti*/
         bankmap.setCurrentCity("廊坊");          // 设置地图显示的城市 此项是必须设置的
         bankmap.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 
-        var usertypemap = new BMap.Map("mod2tile3");    // 创建Map实例
-        usertypemap.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+        var usermap = new BMap.Map("mod1tile4");    // 创建Map实例
+        usermap.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
         //添加地图类型控件
-        usertypemap.addControl(new BMap.MapTypeControl({
+        usermap.addControl(new BMap.MapTypeControl({
             mapTypes: [
                 BMAP_NORMAL_MAP,
                 BMAP_HYBRID_MAP
             ]
         }));
-        usertypemap.setCurrentCity("廊坊");          // 设置地图显示的城市 此项是必须设置的
-        usertypemap.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        usermap.setCurrentCity("廊坊");          // 设置地图显示的城市 此项是必须设置的
+        usermap.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
     </script>
 
     <script type="text/javascript" src="./js/echarts.min.js"></script>
@@ -590,7 +597,6 @@ General tips from Salvatore Previti*/
     <script type="text/javascript" src="./js/dataTool.min.js"></script>
     <script type="text/javascript" src="./js/china.js"></script>
     <script type="text/javascript" src="./js/world.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
     <script type="text/javascript" src="./js/bmap.min.js"></script>
     <script type="text/javascript" src="./js/simplex.js"></script>
     <script type="text/javascript">
@@ -737,12 +743,11 @@ General tips from Salvatore Previti*/
                     show: true, lineStyle: { width: 1, type: 'solid' }
                 },
                 indicator: [
-                    { name: 'Age', min: 20, max: 70 },
-                    { name: 'Education', min: 0, max: 3 },
-                    { name: 'Job', min: 0, max: 10 },
-                    { name: 'Marital', min: 0, max: 3 },
-                    { name: 'Housing', min: 0, max: 1 },
-                    { name: 'Loan', min: 0, max: 1 }
+                    { name: '年龄', min: 20, max: 70 },
+                    { name: '学历', min: 0, max: 3 },
+                    { name: '职业', min: 0, max: 10 },
+                    { name: '家庭状况', min: 0, max: 3 },
+                    { name: '忠诚客户', min: 0, max: 1 }
                 ]
             },
             tooltip: { trigger: 'axis' },
@@ -755,11 +760,11 @@ General tips from Salvatore Previti*/
                     name: '',
                     data: [{
                         name: '客户画像1',
-                        value: [30, 3, 5, 2, 1, 0]
+                        value: [30, 3, 5, 2, 1]
                     },
                     {
                         name: '客户画像2',
-                        value: [50, 2, 8, 2, 0, 1]
+                        value: [50, 2, 8, 2, 0]
                     }
                     ]
                 }
@@ -1149,6 +1154,9 @@ General tips from Salvatore Previti*/
                 document.getElementById("mod1tile1").style.display = "none";
                 document.getElementById("mod1tile2").style.display = "none";
                 document.getElementById("mod1tile3").style.display = "none";
+                document.getElementById("mod1tile4").style.display = "none";
+                document.getElementById("mod1tile5").style.display = "none";
+                document.getElementById("mod1tile6").style.display = "none";
             }
             else if (modnum==2) {
                 document.getElementById("mod2tile1").style.display = "none";
@@ -1168,10 +1176,13 @@ General tips from Salvatore Previti*/
                 document.getElementById("mod1tile1").style.display = "block";
                 document.getElementById("mod1tile2").style.display = "block";
                 document.getElementById("mod1tile3").style.display = "block";
-                
+                document.getElementById("mod1tile4").style.display = "block";
+                document.getElementById("mod1tile5").style.display = "block";
+                document.getElementById("mod1tile6").style.display = "block";
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
+                mod2tile1chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
@@ -1185,6 +1196,7 @@ General tips from Salvatore Previti*/
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
+                mod2tile1chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
@@ -1196,6 +1208,7 @@ General tips from Salvatore Previti*/
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
+                mod2tile1chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
