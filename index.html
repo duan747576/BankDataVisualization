@@ -30,9 +30,9 @@
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
             width: 84%;
-            height: 80%;
+            height: 84%;
 
-            top: 10%;
+            top: 8%;
             left: 5%;
             position: absolute;
             background-color: rgba(32, 32, 32, 0.98);
@@ -94,19 +94,13 @@
         #mod2tile1 {
             position: absolute;
             left:0;top:0;
-            width:25%;height:50%;padding-top:10px;padding-left:10px;
-            border-top-left-radius: 20px;display: none;
+            width:30%;height:98%;padding-top:10px;padding-left:10px;
+            border-top-left-radius: 20px;border-bottom-left-radius: 20px;display: none;
         }
         #mod2tile2 {
             position: absolute;
-            left:0;top:50%;
-            width:25%;height:50%;
-            background: #006;border-bottom-left-radius: 20px;display: none;
-        }
-        #mod2tile3 {
-            position: absolute;
-            left:25%;top:0;
-            width:55%;height:100%;display: none;
+            left:30%;top:0;
+            width:50%;height:100%;display: none;
         }
         #mod2tile4 {
             position: absolute;
@@ -175,10 +169,10 @@
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
             width: 6%;
-            height: 80%;
+            height: 84%;
             padding-right: 20px;
             position: absolute;
-            top: 10%;
+            top: 8%;
             left: 89%;
             background-color: rgba(32, 32, 32, 0.8);
             border-width: 1px;
@@ -599,9 +593,10 @@ General tips from Salvatore Previti*/
     <script type="text/javascript" src="./js/world.js"></script>
     <script type="text/javascript" src="./js/bmap.min.js"></script>
     <script type="text/javascript" src="./js/simplex.js"></script>
+    <script type="text/javascript" src="./js/theme.js"></script>
     <script type="text/javascript">
         //echartsJS
-        var mod1tile1chart = echarts.init(document.getElementById("mod1tile1"));
+        var mod1tile1chart = echarts.init(document.getElementById("mod1tile1"),'dark');
             mod1tile1chartoption = {
                 title: {
                     text: '账户余额走势'
@@ -618,17 +613,13 @@ General tips from Salvatore Previti*/
                 dataset: {
                     source: [
                         ['total', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                        ['all', 1076710, 1017220, 1020060, 537059, 22910.6, 24933.7, 6162.26, 49167.6, 203517, 1323.37, 3214.44, 6290.47],
-                        ['buy', 400021, 400021, 400021, 400021, 404085, 409021, 409021, 995152, 1249870, 1254830, 1259280, 1257890]
+                        ['活期', 1076710, 1017220, 1020060, 537059, 22910.6, 24933.7, 6162.26, 49167.6, 203517, 1323.37, 3214.44, 6290.47],
+                        ['定期', 400021, 400021, 400021, 400021, 404085, 409021, 409021, 995152, 1249870, 1254830, 1259280, 1257890],
+                        ['理财', 400021, 400021, 400021, 400021, 404085, 409021, 409021, 995152, 1249870, 1254830, 1259280, 1257890]
                     ]
                 },
                 legend: {
-                    data: ['all', 'buy']
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: {}
-                    }
+                    data: ['活期', '定期','理财']
                 },
                 grid: {
                     left: '3%',
@@ -645,19 +636,29 @@ General tips from Salvatore Previti*/
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
+                        max:function(value){
+                            return value.max * 1.4;
+                        }
                     }
                 ],
                 series: [
                     {
-                        name: 'all',
+                        name: '活期',
                         type: 'line',
                         stack: '总量',
                         areaStyle: { normal: {} },
                         seriesLayoutBy: 'row'
                     },
                     {
-                        name: 'buy',
+                        name: '定期',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: { normal: {} },
+                        seriesLayoutBy: 'row'
+                    },
+                    {
+                        name: '理财',
                         type: 'line',
                         stack: '总量',
                         areaStyle: { normal: {} },
@@ -669,6 +670,7 @@ General tips from Salvatore Previti*/
                         id: 'pie',
                         center: ['85%', '20%'],
                         radius: '28%',
+                        hoverAnimation:false,
                         z: 100,
                         itemStyle:{
                             opacity:0.5,
@@ -689,7 +691,7 @@ General tips from Salvatore Previti*/
                 series: {
                     id: 'pie',
                     label: {
-                        formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                        formatter: '{d}%'
                     },
                     encode: {
                         value: dimension,
@@ -701,12 +703,11 @@ General tips from Salvatore Previti*/
     });
         mod1tile1chart.setOption(mod1tile1chartoption, true);
 
-        var mod1tile2chart = echarts.init(document.getElementById("mod1tile2"));
+        var mod1tile2chart = echarts.init(document.getElementById("mod1tile2"),'dark');
         mod1tile2chartoption = {
             title: {
                 show: true,
                 text: '客户画像雷达图',
-                subtext: '',
                 x: 'center',
                 y: 'top',
                 padding: 10,
@@ -715,14 +716,10 @@ General tips from Salvatore Previti*/
                 subtextStyle: { fontSize: 14 }
             },
             legend: {
-                data: ['客户画像1', '客户画像2'],
-                top: 'bottom',
-                left: 'center',
-                orient: 'horizontal',
-                textStyle: {
-                    color: "#ffffff",
-                    fontSize: 12
-                }
+                data: ['客户画像', '聚类均值'],
+                top: 'top',
+                left: 'right',
+                orient: 'vertical'
             },
             animationDuration: 1500,
             animationEasing: 'Linear',
@@ -732,7 +729,7 @@ General tips from Salvatore Previti*/
                     color: '#F0FFF0',
                     fontSize: 20
                 },
-                center: ['50%', '50%'],
+                center: ['50%', '60%'],
                 radius: '60%',
                 startAngle: 90,
                 splitNumber: 5,
@@ -759,11 +756,11 @@ General tips from Salvatore Previti*/
                     symbolRotate: 0,
                     name: '',
                     data: [{
-                        name: '客户画像1',
+                        name: '客户画像',
                         value: [30, 3, 5, 2, 1]
                     },
                     {
-                        name: '客户画像2',
+                        name: '聚类均值',
                         value: [50, 2, 8, 2, 0]
                     }
                     ]
@@ -772,7 +769,7 @@ General tips from Salvatore Previti*/
         };
         mod1tile2chart.setOption(mod1tile2chartoption, true);
 
-        var mod1tile3chart = echarts.init(document.getElementById("mod1tile3"));
+        var mod1tile3chart = echarts.init(document.getElementById("mod1tile3"),'dark');
         mod1tile3chartoption = {
             title: {
                 show: true,
@@ -781,10 +778,7 @@ General tips from Salvatore Previti*/
                 x: 'center',
                 y: 'top',
                 padding: 10,
-                itemGap: 8,
-                textStyle:
-                    { color: "#fff", fontSize: 20 },
-                subtextStyle: { fontSize: 14 }
+                itemGap: 8
             },
 
             animationDuration: 1500,
@@ -795,6 +789,10 @@ General tips from Salvatore Previti*/
                 name: 'Data',
                 type: 'graph',
                 layout: 'circular',
+                left:'center',
+                top:'30%',
+                width:'60%',
+                height:'60%',
                 circular: { rotateLabel: true },
                 roam: false,
                 focusNodeAdjacency: true,
@@ -807,79 +805,311 @@ General tips from Salvatore Previti*/
                         width: 3, curveness: 0.2
                     }
                 },
-                top: '20%', left: '10%', right: '10%', bottom: '10%',
                 data:
-                    [{ name: 'A1', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 8, value: 8, draggable: true },
-                    { name: 'B7', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
-                    { name: 'A2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
-                    { name: 'B1', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B4', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B5', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B6', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B8', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B9', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
-                    { name: 'B10', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true }],
+                    [{ name: '用户', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 8, value: 8, draggable: true },
+                    { name: '商户B7', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
+                    { name: '商户A2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 2, value: 2, draggable: true },
+                    { name: '商户B1', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: '商户B2', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: '商户B4', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: '商户B5', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: '用户B6', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: '用户B8', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: '取款B9', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true },
+                    { name: '取款B10', symbol: 'emptyCircle', itemStyle: { normal: { borderWidth: 2 } }, symbolSize: 1, value: 1, draggable: true }],
                 links: [
-                    { source: 'A1', target: 'B1' },
-                    { source: 'A1', target: 'B2' },
-                    { source: 'A1', target: 'A2' },
-                    { source: 'A1', target: 'B4' },
-                    { source: 'A1', target: 'B5' },
-                    { source: 'A1', target: 'B6' },
-                    { source: 'A1', target: 'B7' },
-                    { source: 'B7', target: 'B8' },
-                    { source: 'A1', target: 'B9' },
-                    { source: 'A2', target: 'B10' }]
+                    { source: '用户', target: '商户B1' },
+                    { source: '用户', target: '商户B2' },
+                    { source: '用户', target: '商户A2' },
+                    { source: '用户', target: '商户B4' },
+                    { source: '用户', target: '商户B5' },
+                    { source: '用户', target: '用户B6' },
+                    { source: '用户', target: '商户B7' },
+                    { source: '用户', target: '用户B8' },
+                    { source: '用户', target: '取款B9' },
+                    { source: '用户', target: '取款B10' }]
 
             }]
         };
         mod1tile3chart.setOption(mod1tile3chartoption, true);
 
-        var mod2tile1chart = echarts.init(document.getElementById("mod2tile1"));
+        var mod2tile1chart = echarts.init(document.getElementById("mod2tile1"),'dark');
+        var item1 = {
+            color: '#F54F4A'
+        };
+        var item2 = {
+            color: '#FF8C75'
+        };
+        var item3 = {
+            color: '#FFB499'
+        };
+
+        var mod2tile1data = [{
+            name:'class0',
+            itemStyle: item1,
+            children:[{
+                name:'流失',
+                itemStyle: item2,
+                value:40,
+                children:[{
+                    name:'高价值客户',
+                    value:6,
+                    itemStyle:item1
+                },{
+                    name:'消费客户',
+                    value:20,
+                    itemStyle:item3
+                }]
+            },{
+                name:'未流失',
+                itemStyle: item3,
+                value:140,
+                children:[{
+                    name:'高价值客户',
+                    value:42
+                },{
+                    name:'消费客户',
+                    value:71
+                }]
+            }]},{
+            name:'class2',
+            itemStyle: item1,
+            children:[{
+                name:'流失',
+                itemStyle: item2,
+                value:70,
+                children:[{
+                    name:'高价值客户',
+                    value:42,
+                    itemStyle:item1
+                },{
+                    name:'消费客户',
+                    value:19,
+                    itemStyle:item3
+                }]
+            },{
+                name:'未流失',
+                itemStyle: item3,
+                value:110,
+                children:[{
+                    name:'高价值客户',
+                    value:22
+                },{
+                    name:'消费客户',
+                    value:61
+                }]
+            }]},{
+            name:'class7',
+            itemStyle: item1,
+            children:[{
+                name:'流失',
+                itemStyle: item2,
+                value:10,
+                children:[{
+                    name:'高价值客户',
+                    value:8,
+                    itemStyle:item1
+                },{
+                    name:'消费客户',
+                    value:1,
+                    itemStyle:item3
+                }]
+            },{
+                name:'未流失',
+                itemStyle: item3,
+                value:60,
+                children:[{
+                    name:'高价值客户',
+                    value:12
+                },{
+                    name:'消费客户',
+                    value:21
+                }]
+            }]}
+        ];
         mod2tile1chartoption = {
             title: {
-                text: '某站点用户访问来源',
-                subtext: '纯属虚构',
-                x: 'center'
+                show: true,
+                text: '全用户分类图',
+                x: 'center',
+                y: 'top',
+                padding: 10,
+                itemGap: 8,
+                textStyle: { color: "#fff", fontSize: 24 },
+                subtextStyle: { fontSize: 14 }
             },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-            },
-            series: [
-                {
-                    name: '访问来源',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        { value: 335, name: '直接访问' },
-                        { value: 310, name: '邮件营销' },
-                        { value: 234, name: '联盟广告' },
-                        { value: 1548, name: '搜索引擎' }
-                    ],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
+            series: {
+                radius: ['15%', '90%'],
+                type: 'sunburst',
+                sort: null,
+                highlightPolicy: 'ancestor',
+                data: mod2tile1data,
+                label: {
+                    rotate: 'tangential'
+                },
+                levels: [],
+                itemStyle: {
+                    color: '#ddd',
+                    borderWidth: 2
                 }
-            ]
+            }
         };
         mod2tile1chart.setOption(mod2tile1chartoption, true);
 
-        var mod5tile2chart = echarts.init(document.getElementById("mod5tile2"));
+        var mod2tile2chart = echarts.init(document.getElementById("mod2tile2"),'dark');
+        mod2tile2chartoption = {
+            title: {
+                show: true,
+                text: 'class用户占比图',
+                x: 'center',
+                y: 'top',
+                padding: 10,
+                itemGap: 8,
+                textStyle: { color: "#fff", fontSize: 24 },
+                subtextStyle: { fontSize: 14 }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                },
+            series: [
+            {
+                name:'年龄占比',
+                type:'pie',
+                radius: ['20%', '30%'],
+                center:['30%','35%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:23, name:'18-30'},
+                    {value:45, name:'30-40'},
+                    {value:15, name:'40-50'},
+                    {value:12, name:'50-60'},
+                    {value:5, name:'>60'}
+                ]
+            },{
+                name:'家庭状况',
+                type:'pie',
+                radius: ['20%', '30%'],
+                center:['70%','35%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:13, name:'未婚'},
+                    {value:17, name:'已婚无子女'},
+                    {value:43, name:'已婚有子女'},
+                    {value:24, name:'离异'},
+                    {value:3, name:'再婚'}
+                ]
+            },{
+                name:'学历',
+                type:'pie',
+                radius: ['20%', '30%'],
+                center:['30%','70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:17, name:'初中及以下'},
+                    {value:34, name:'高中'},
+                    {value:40, name:'大学/专科'},
+                    {value:6, name:'硕士'},
+                    {value:3, name:'博士及以上'}
+                ]
+            },{
+                name:'行业分布',
+                type:'pie',
+                radius: ['20%', '30%'],
+                center:['70%','70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:335, name:'农业'},
+                    {value:310, name:'工业'},
+                    {value:234, name:'服务业'},
+                    {value:135, name:'政府机关'},
+                    {value:1548, name:'其他'}
+                ]
+            }
+            ]
+        };
+        mod2tile2chart.setOption(mod2tile2chartoption, true);
+
+        var mod5tile2chart = echarts.init(document.getElementById("mod5tile2"),'dark');
         mod5tile2chartoption = {
             title: {
-                text: '关系图',
+                text: '客户数/存款变化统计',
                 subtext: '',
                 x: 'center',
                 align: 'right'
@@ -1056,8 +1286,14 @@ General tips from Salvatore Previti*/
         };
         mod5tile2chart.setOption(mod5tile2chartoption, true);
 
-        var mod5tile3chart = echarts.init(document.getElementById("mod5tile3"));
+        var mod5tile3chart = echarts.init(document.getElementById("mod5tile3"),'dark');
         mod5tile3chartoption = {
+            title: {
+                text: '支行收支统计',
+                subtext: '',
+                x: 'center',
+                align: 'right'
+            },
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -1182,7 +1418,7 @@ General tips from Salvatore Previti*/
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
-                mod2tile1chart.resize();
+                mod2tile1chart.resize();mod2tile2chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
@@ -1196,7 +1432,7 @@ General tips from Salvatore Previti*/
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
-                mod2tile1chart.resize();
+                mod2tile1chart.resize();mod2tile2chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
@@ -1208,7 +1444,7 @@ General tips from Salvatore Previti*/
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
-                mod2tile1chart.resize();
+                mod2tile1chart.resize();mod2tile2chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
@@ -1219,7 +1455,7 @@ General tips from Salvatore Previti*/
                 mod1tile1chart.resize();
                 mod1tile2chart.resize();
                 mod1tile3chart.resize();
-                mod2tile1chart.resize();
+                mod2tile1chart.resize();mod2tile2chart.resize();
                 mod5tile2chart.resize();
                 mod5tile3chart.resize();
             }
