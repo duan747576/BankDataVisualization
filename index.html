@@ -32,7 +32,7 @@
 
         #main {
             border-radius: 20px;
-            width: 185%;
+            width: 280%;
             height: 84%;
 
             top: 8%;
@@ -45,12 +45,22 @@
             border-color: rgb(172, 172, 172);
         }
 
+        #storage {
+            position:absolute;
+            left:34%;
+            top:15%;
+            height:85%;
+            width:24%;
+
+            
+        }
+
         #sunchart {
             position: absolute;
             left: 0;
             top: 0;
-            width: 15%;
-            height: 98%;
+            width: 12%;
+            height: 100%;
             padding-top: 10px;
             padding-left: 10px;
             border-top-left-radius: 20px;
@@ -58,21 +68,30 @@
             display: block;
         }
 
-        #togglediv {
+        #togglediv1 {
             position: absolute;
-            left: 48%;
+            left: 32%;
             top: 0;
-            width: 4%;
+            width: 2%;
             height: 100%;
             background: rgba(60, 60, 60, 0.8);
         }
 
-        #linechart {
+        #togglediv2 {
             position: absolute;
-            left: 52%;
+            left: 66%;
             top: 0;
-            width: 40%;
+            width: 2%;
             height: 100%;
+            background: rgba(60, 60, 60, 0.8);
+        }
+
+        #consume {
+            position: absolute;
+            left: 68%;
+            top: 0;
+            width: 24%;
+            height: 50%;
             display: block;
         }
 
@@ -117,22 +136,23 @@
     <canvas id="canvasbg" width="1920" height="1080"></canvas>
     <!--背景-->
     <div class=title>
-        <h1 id="titletext">数据驾驶舱</h1>
+        <h1 id="titletext">DEMO</h1>
         <!--标题-->
     </div>
     <div id="main">
         <!--主体-->
-        <div id='linechart'></div>
-        <div id="togglediv">
+        <div id='storage'></div>
+        <div id='consume'></div>
+        <div id="togglediv1">
+            <p>点我</p>
+        </div>
+        <div id="togglediv2">
             <p>点我</p>
         </div>
         <div id='sunchart'></div>
     </div>
-    <div>
-        <button>开始动画</button>
-    </div>
 
-    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="./jquery.min.js"></script>
     <script>
         //背景部分JS
 
@@ -341,13 +361,73 @@ Optimizing tips from Benjamin K?stner
 General tips from Salvatore Previti*/
     </script>
 
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="./echarts.min.js"></script>
     <script type="text/javascript">
         //echartsJS
-        var linechartchart = echarts.init(document.getElementById("linechart"));
-        linechartchartoption = {
+        var storagechart = echarts.init(document.getElementById("storage"));
+        storagechartoption = {
             title: {
-                text: '账户余额走势'
+                text: '某地区蒸发量和降水量',
+                subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['蒸发量', '降水量']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '蒸发量',
+                    type: 'bar',
+                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' }
+                        ]
+                    }
+                }
+            ]
+        };
+        storagechart.setOption(storagechartoption, true);
+
+        var consumechart = echarts.init(document.getElementById("consume"));
+        consumechartoption = {
+            title: {
+                text: '消费流水统计'
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    magicType: { show: true, type: ['line', 'bar'] }
+                }
             },
             tooltip: {
                 trigger: 'axis',
@@ -378,7 +458,6 @@ General tips from Salvatore Previti*/
             xAxis: [
                 {
                     type: 'category',
-                    boundaryGap: false,
                     data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
                 }
             ],
@@ -393,23 +472,17 @@ General tips from Salvatore Previti*/
             series: [
                 {
                     name: '活期',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: { normal: {} },
+                    type: 'bar',
                     seriesLayoutBy: 'row'
                 },
                 {
                     name: '定期',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: { normal: {} },
+                    type: 'bar',
                     seriesLayoutBy: 'row'
                 },
                 {
                     name: '理财',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: { normal: {} },
+                    type: 'bar',
                     seriesLayoutBy: 'row'
                 },
                 {
@@ -431,11 +504,11 @@ General tips from Salvatore Previti*/
                 }
             ]
         };
-        linechartchart.on('updateAxisPointer', function (event) {
+        consumechart.on('updateAxisPointer', function (event) {
             var xAxisInfo = event.axesInfo[0];
             if (xAxisInfo) {
                 var dimension = xAxisInfo.value + 1;
-                linechartchart.setOption({
+                consumechart.setOption({
                     series: {
                         id: 'pie',
                         label: {
@@ -449,7 +522,7 @@ General tips from Salvatore Previti*/
                 });
             }
         });
-        linechartchart.setOption(linechartchartoption, true);
+        consumechart.setOption(consumechartoption, true);
 
         var sunchartchart = echarts.init(document.getElementById("sunchart"));
         var item1 = {
@@ -536,16 +609,24 @@ General tips from Salvatore Previti*/
         //echarts大小自适应
         setTimeout(function () {
             window.onresize = function () {
-                linechartchart.resize();
+                consumechart.resize();
                 sunchartchart.resize();
             }
         }, 200);
         $(document).ready(function () {
-            $("#togglediv").click(function () {
+            $("#togglediv1").click(function () {
                 if (document.getElementById("main").style.left == "5%")
                     $("#main").animate({ left: '-90%' });
                 else
                     $("#main").animate({ left: '5%' });
+            });
+        });
+        $(document).ready(function () {
+            $("#togglediv2").click(function () {
+                if (document.getElementById("main").style.left == "-90%")
+                    $("#main").animate({ left: '-185%' });
+                else
+                    $("#main").animate({ left: '-90%' });
             });
         });
     </script>
