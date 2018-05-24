@@ -95,6 +95,15 @@
             display: block;
         }
 
+        #transfer {
+            position: absolute;
+            left: 68%;
+            top: 50%;
+            width: 24%;
+            height: 50%;
+            display: block;
+        }
+
         #canvas {
             z-index: 1;
         }
@@ -143,6 +152,7 @@
         <!--主体-->
         <div id='storage'></div>
         <div id='consume'></div>
+        <div id='transfer'></div>
         <div id="togglediv1">
             <p>点我</p>
         </div>
@@ -523,6 +533,64 @@ General tips from Salvatore Previti*/
             }
         });
         consumechart.setOption(consumechartoption, true);
+
+        var transferchart = echarts.init(document.getElementById("transfer"));
+        transferchartoption = {
+        title: {
+            text: 'transfer'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        xAxis: {
+            data:[1,2,3,4,5,6,7],
+        },
+        yAxis: {
+            splitLine: {
+                show: false
+            },
+            type:'value'
+        },
+        visualMap: {
+            top: 10,
+            right: 10,
+            pieces: [{
+                gt: 0,
+                lte: 20000,
+                color: '#096'
+            }, {
+                gt: 20000,
+                lte: 60000,
+                color: '#ffde33'
+            }, {
+                gt: 60000,
+                lte: 200000,
+                color: '#ff9933'
+            }, {
+                gt: 200000,
+                color: '#cc0033'
+            }],
+            outOfRange: {
+                color: '#999'
+            }
+        },
+        series: {
+            name: 'transfering',
+            type: 'line',
+            data: [5,700,5000,10000,40000,140000,250000],
+            markLine: {
+                silent: true,
+                data: [{
+                    yAxis: 20000
+                }, {
+                    yAxis: 60000
+                }, {
+                    yAxis: 200000
+                }]
+            }
+        }
+    };
+        transferchart.setOption(transferchartoption, true);
 
         var sunchartchart = echarts.init(document.getElementById("sunchart"));
         var item1 = {
