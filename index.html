@@ -1,0 +1,791 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Bank</title>
+
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            background: rgb(36, 36, 35);
+            height: 100%;
+            width: 100%;
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        /**************************************************************/
+
+        /**************************主体样式****************************/
+
+        /**************************************************************/
+
+        #main {
+            border-radius: 20px;
+            width: 185%;
+            height: 84%;
+
+            top: 8%;
+            left: 5%;
+            position: absolute;
+            background-color: rgba(32, 32, 32, 0.98);
+            opacity: 0.96;
+            border-width: 1px;
+            border-style: outset;
+            border-color: rgb(172, 172, 172);
+        }
+
+        #storage {
+            position: absolute;
+            left: 52%;
+            top: 15%;
+            height: 85%;
+            width: 33%;
+
+
+        }
+
+        #userinfo {
+            position:absolute;
+            left:52%;
+            top:0;
+            height:15%;
+            width:33%;
+        }
+
+        #sunchart {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 17%;
+            height: 100%;
+            padding-top: 10px;
+            padding-left: 10px;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            display: block;
+        }
+
+        #predictindex {
+            position:absolute;
+            left:85%;
+            top:0;
+            height:30%;
+            width:15%;
+            /*border-top-right-radius: 20px;
+            border-width: 1px;
+            border-style: outset;
+            border-color: rgb(172, 172, 172);*/
+        }
+
+        #togglediv1 {
+            position: absolute;
+            left: 48%;
+            top: 0;
+            width: 4%;
+            height: 100%;
+            background: rgba(60, 60, 60, 0.8);
+        }
+
+        #consumepie {
+            position: absolute;
+            left: 85%;
+            top: 30%;
+            height: 55%;
+            width: 15%;
+        }
+        #consumetoggle {
+            position: absolute;
+            left: 85%;
+            top: 85%;
+            height: 15%;
+            width: 15%;
+            border-bottom-right-radius: 20px;
+            border-width: 1px;
+            border-style: outset;
+            border-color: rgb(172, 172, 172);
+        }
+
+        /*#togglediv2 {
+            position: absolute;
+            left: 66%;
+            top: 0;
+            width: 2%;
+            height: 100%;
+            background: rgba(60, 60, 60, 0.8);
+        }*/
+
+        /*#consume {
+            position: absolute;
+            left: 68%;
+            top: 0;
+            width: 24%;
+            height: 50%;
+            display: block;
+        }
+
+        #transfer {
+            position: absolute;
+            left: 68%;
+            top: 50%;
+            width: 24%;
+            height: 50%;
+            display: block;
+        }*/
+
+        #canvas {
+            z-index: 1;
+        }
+
+        #canvasbg {
+            z-index: -10;
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+            filter: blur(3px);
+            opacity: 0.6;
+        }
+
+        .title {
+
+            position: absolute;
+            height: 7%;
+            width: 20%;
+            left: 10%;
+            top: 2%;
+        }
+
+        #titletext {
+            color: rgb(41, 41, 41);
+            font-size: 2.5em;
+            font-family: 'Microsoft Jhenghei';
+            white-space: nowrap;
+            text-shadow: -1px -1px rgb(185, 185, 185), 1px 1px rgb(109, 109, 109);
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <canvas id="canvas" width="1920" height="1080"></canvas>
+    <canvas id="canvasbg" width="1920" height="1080"></canvas>
+    <!--背景-->
+    <div class=title>
+        <h1 id="titletext">DEMO</h1>
+        <!--标题-->
+    </div>
+    <div id="main">
+        <!--主体-->
+        <div id='sunchart'></div>
+        <div id="userinfo">
+            <p style="display:inline">124325</p>
+            <p style="display:inline">的用户数据</p>
+        </div>
+        <div id='storage'></div>
+        <div id='consumepie'></div>
+        <div id='predictindex'>
+            <p>线性回归算法：</p>
+            <p>237.5224</p>
+            <p>决策树算法：</p>
+            <p>83.7248</p>
+        </div>
+        <div id="consumetoggle">
+        </div>
+        <!--<div id='consume'></div>
+        <div id='transfer'></div>-->
+        <div id="togglediv1">
+            <p>点我</p>
+        </div>
+        <!--<div id="togglediv2">
+            <p>点我</p>
+        </div>-->
+    </div>
+
+    <script src="./jquery.min.js"></script>
+    <script>
+        //背景部分JS
+
+        window.addEventListener("resize", resizeCanvas, false);
+        var canvas1 = document.getElementById('canvas');
+        var canvas2 = document.getElementById('canvasbg');
+        function resizeCanvas() {
+            canvas1.width = window.innerWidth;
+            canvas1.height = window.innerHeight;
+            canvas2.width = window.innerWidth;
+            canvas2.height = window.innerHeight;
+        }
+
+        // min and max radius, radius threshold and percentage of filled circles
+        var radMin = 5,
+            radMax = 125,
+            filledCircle = 60, //percentage of filled circles
+            concentricCircle = 30, //percentage of concentric circles
+            radThreshold = 25; //IFF special, over this radius concentric, otherwise filled
+
+        //min and max speed to move
+        var speedMin = 0.3,
+            speedMax = 1.0;
+
+        //max reachable opacity for every circle and blur effect
+        var maxOpacity = 0.6;
+
+        //default palette choice
+        var colors = ['52,168,83', '117,95,147', '199,108,23', '194,62,55', '0,172,212', '120,120,120'],
+            bgColors = ['52,168,83', '117,95,147', '199,108,23', '194,62,55', '0,172,212', '120,120,120'],
+            circleBorder = 10,
+            backgroundLine = bgColors[0];
+        var backgroundMlt = 0.85;
+
+        //min distance for links
+        var linkDist = Math.min(canvas.width, canvas.height) / 2.4,
+            lineBorder = 2.5;
+
+        //most importantly: number of overall circles and arrays containing them
+        var maxCircles = 12,
+            points = [],
+            pointsBack = [];
+
+        //populating the screen
+        for (var i = 0; i < maxCircles * 2; i++) points.push(new Circle());
+        for (var i = 0; i < maxCircles; i++) pointsBack.push(new Circle(true));
+
+        //experimental vars
+        var circleExp = 1,
+            circleExpMax = 1.003,
+            circleExpMin = 0.997,
+            circleExpSp = 0.00004,
+            circlePulse = false;
+
+        //circle class
+        function Circle(background) {
+            //if background, it has different rules
+            this.background = (background || false);
+            this.x = randRange(-canvas.width / 2, canvas.width / 2);
+            this.y = randRange(-canvas.height / 2, canvas.height / 2);
+            this.radius = background ? hyperRange(radMin, radMax) * backgroundMlt : hyperRange(radMin, radMax);
+            this.filled = this.radius < radThreshold ? (randint(0, 100) > filledCircle ? false : 'full') : (randint(0, 100) > concentricCircle ? false : 'concentric');
+            this.color = background ? bgColors[randint(0, bgColors.length - 1)] : colors[randint(0, colors.length - 1)];
+            this.borderColor = background ? bgColors[randint(0, bgColors.length - 1)] : colors[randint(0, colors.length - 1)];
+            this.opacity = 0.05;
+            this.speed = (background ? randRange(speedMin, speedMax) / backgroundMlt : randRange(speedMin, speedMax)); // * (radMin / this.radius);
+            this.speedAngle = Math.random() * 2 * Math.PI;
+            this.speedx = Math.cos(this.speedAngle) * this.speed;
+            this.speedy = Math.sin(this.speedAngle) * this.speed;
+            var spacex = Math.abs((this.x - (this.speedx < 0 ? -1 : 1) * (canvas.width / 2 + this.radius)) / this.speedx),
+                spacey = Math.abs((this.y - (this.speedy < 0 ? -1 : 1) * (canvas.height / 2 + this.radius)) / this.speedy);
+            this.ttl = Math.min(spacex, spacey);
+        };
+
+        Circle.prototype.init = function () {
+            Circle.call(this, this.background);
+        }
+
+        //support functions
+        //generate random int a<=x<=b
+        function randint(a, b) {
+            return Math.floor(Math.random() * (b - a + 1) + a);
+        }
+        //generate random float
+        function randRange(a, b) {
+            return Math.random() * (b - a) + a;
+        }
+        //generate random float more likely to be close to a
+        function hyperRange(a, b) {
+            return Math.random() * Math.random() * Math.random() * (b - a) + a;
+        }
+
+        //rendering function
+        function drawCircle(ctx, circle) {
+            //circle.radius *= circleExp;
+            var radius = circle.background ? circle.radius *= circleExp : circle.radius /= circleExp;
+            ctx.beginPath();
+            ctx.arc(circle.x, circle.y, radius * circleExp, 0, 2 * Math.PI, false);
+            ctx.lineWidth = Math.max(1, circleBorder * (radMin - circle.radius) / (radMin - radMax));
+            ctx.strokeStyle = ['rgba(', circle.borderColor, ',', circle.opacity, ')'].join('');
+            if (circle.filled == 'full') {
+                ctx.fillStyle = ['rgba(', circle.borderColor, ',', circle.background ? circle.opacity * 0.8 : circle.opacity, ')'].join('');
+                ctx.fill();
+                ctx.lineWidth = 0;
+                ctx.strokeStyle = ['rgba(', circle.borderColor, ',', 0, ')'].join('');
+            }
+            ctx.stroke();
+            if (circle.filled == 'concentric') {
+                ctx.beginPath();
+                ctx.arc(circle.x, circle.y, radius / 2, 0, 2 * Math.PI, false);
+                ctx.lineWidth = Math.max(1, circleBorder * (radMin - circle.radius) / (radMin - radMax));
+                ctx.strokeStyle = ['rgba(', circle.color, ',', circle.opacity, ')'].join('');
+                ctx.stroke();
+            }
+            circle.x += circle.speedx;
+            circle.y += circle.speedy;
+            if (circle.opacity < (circle.background ? maxOpacity : 1)) circle.opacity += 0.01;
+            circle.ttl--;
+        }
+
+        //initializing function
+        function init() {
+            window.requestAnimationFrame(draw);
+        }
+
+        //rendering function
+        function draw() {
+
+            if (circlePulse) {
+                if (circleExp < circleExpMin || circleExp > circleExpMax) circleExpSp *= -1;
+                circleExp += circleExpSp;
+            }
+            var ctxfr = document.getElementById('canvas').getContext('2d');
+            var ctxbg = document.getElementById('canvasbg').getContext('2d');
+
+            ctxfr.globalCompositeOperation = 'destination-over';
+            ctxfr.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+            ctxbg.globalCompositeOperation = 'destination-over';
+            ctxbg.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+
+            ctxfr.save();
+            ctxfr.translate(canvas.width / 2, canvas.height / 2);
+            ctxbg.save();
+            ctxbg.translate(canvas.width / 2, canvas.height / 2);
+
+            //function to render each single circle, its connections and to manage its out of boundaries replacement
+            function renderPoints(ctx, arr) {
+                for (var i = 0; i < arr.length; i++) {
+                    var circle = arr[i];
+                    //checking if out of boundaries
+                    if (circle.ttl < 0) { }
+                    var xEscape = canvas.width / 2 + circle.radius,
+                        yEscape = canvas.height / 2 + circle.radius;
+                    if (circle.ttl < -20) arr[i].init(arr[i].background);
+                    //if (Math.abs(circle.y) > yEscape || Math.abs(circle.x) > xEscape) arr[i].init(arr[i].background);
+                    drawCircle(ctx, circle);
+                }
+                for (var i = 0; i < arr.length - 1; i++) {
+                    for (var j = i + 1; j < arr.length; j++) {
+                        var deltax = arr[i].x - arr[j].x;
+                        var deltay = arr[i].y - arr[j].y;
+                        var dist = Math.pow(Math.pow(deltax, 2) + Math.pow(deltay, 2), 0.5);
+                        //if the circles are overlapping, no laser connecting them
+                        if (dist <= arr[i].radius + arr[j].radius) continue;
+                        //otherwise we connect them only if the dist is < linkDist
+                        if (dist < linkDist) {
+                            var xi = (arr[i].x < arr[j].x ? 1 : -1) * Math.abs(arr[i].radius * deltax / dist);
+                            var yi = (arr[i].y < arr[j].y ? 1 : -1) * Math.abs(arr[i].radius * deltay / dist);
+                            var xj = (arr[i].x < arr[j].x ? -1 : 1) * Math.abs(arr[j].radius * deltax / dist);
+                            var yj = (arr[i].y < arr[j].y ? -1 : 1) * Math.abs(arr[j].radius * deltay / dist);
+                            ctx.beginPath();
+                            ctx.moveTo(arr[i].x + xi, arr[i].y + yi);
+                            ctx.lineTo(arr[j].x + xj, arr[j].y + yj);
+                            var samecolor = arr[i].color == arr[j].color;
+                            ctx.strokeStyle = ["rgba(", arr[i].borderColor, ",", Math.min(arr[i].opacity, arr[j].opacity) * ((linkDist - dist) / linkDist), ")"].join("");
+                            ctx.lineWidth = (arr[i].background ? lineBorder * backgroundMlt : lineBorder) * ((linkDist - dist) / linkDist); //*((linkDist-dist)/linkDist);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            var startTime = Date.now();
+            renderPoints(ctxfr, points);
+            renderPoints(ctxbg, pointsBack);
+            deltaT = Date.now() - startTime;
+
+            ctxfr.restore();
+            ctxbg.restore();
+
+            window.requestAnimationFrame(draw);
+        }
+
+        init();
+
+        window.addEventListener("resize", resizeCanvas, false);
+        function resizeCanvas() {
+            w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight;
+        }
+
+
+/*Credits and aknowledgements:
+Original Idea and Design by Luca Luzzatti
+
+Optimizing tips from Benjamin K?stner
+General tips from Salvatore Previti*/
+    </script>
+
+    <script type="text/javascript" src="./echarts.min.js"></script>
+    <script type="text/javascript">
+        //echartsJS
+        var storagechart = echarts.init(document.getElementById("storage"));
+        storagechartoption = {
+            title: {
+                text: '用户12月存款值'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['存款值']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    magicType: { show: true, type: ['line', 'bar'] }
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '存款值',
+                    type: 'bar',
+                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' }
+                        ]
+                    }
+                }
+            ]
+        };
+        storagechart.setOption(storagechartoption, true);
+
+        var consumepiechart = echarts.init(document.getElementById("consumepie"));
+        consumepiechartoption = {
+            title: {
+                text: '消费占比',
+                subtext: '消费值',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['支付宝', '微信', 'POS机']
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        { value: 335, name: '支付宝' },
+                        { value: 310, name: '微信' },
+                        { value: 234, name: 'POS机' }
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        consumepiechart.setOption(consumepiechartoption, true);
+        /*
+                var consumechart = echarts.init(document.getElementById("consume"));
+                consumechartoption = {
+                    title: {
+                        text: '消费流水统计'
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: { show: true, type: ['line', 'bar'] }
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#6a7985'
+                            }
+                        }
+                    },
+                    dataset: {
+                        source: [
+                            ['total', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                            ['活期', 1076710, 1017220, 1020060, 537059, 22910.6, 24933.7, 6162.26, 49167.6, 203517, 1323.37, 3214.44, 6290.47],
+                            ['定期', 400021, 400021, 400021, 400021, 404085, 409021, 409021, 995152, 1249870, 1254830, 1259280, 1257890],
+                            ['理财', 400021, 400021, 400021, 400021, 404085, 409021, 409021, 995152, 1249870, 1254830, 1259280, 1257890]
+                        ]
+                    },
+                    legend: {
+                        data: ['活期', '定期', '理财']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            max: function (value) {
+                                return value.max * 1.4;
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '活期',
+                            type: 'bar',
+                            seriesLayoutBy: 'row'
+                        },
+                        {
+                            name: '定期',
+                            type: 'bar',
+                            seriesLayoutBy: 'row'
+                        },
+                        {
+                            name: '理财',
+                            type: 'bar',
+                            seriesLayoutBy: 'row'
+                        },
+                        {
+                            name: '百分比',
+                            type: 'pie',
+                            id: 'pie',
+                            center: ['85%', '20%'],
+                            radius: '28%',
+                            hoverAnimation: false,
+                            z: 100,
+                            itemStyle: {
+                                opacity: 0.5,
+                                borderColor: '#fff'
+                            },
+                            encode: {
+                                itemName: 'save',
+                                value: '六月'
+                            }
+                        }
+                    ]
+                };
+                consumechart.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        consumechart.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{d}%'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+                consumechart.setOption(consumechartoption, true);
+        
+                var transferchart = echarts.init(document.getElementById("transfer"));
+                transferchartoption = {
+                title: {
+                    text: 'transfer'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    data:[1,2,3,4,5,6,7],
+                },
+                yAxis: {
+                    splitLine: {
+                        show: false
+                    },
+                    type:'value'
+                },
+                visualMap: {
+                    top: 10,
+                    right: 10,
+                    pieces: [{
+                        gt: 0,
+                        lte: 20000,
+                        color: '#096'
+                    }, {
+                        gt: 20000,
+                        lte: 60000,
+                        color: '#ffde33'
+                    }, {
+                        gt: 60000,
+                        lte: 200000,
+                        color: '#ff9933'
+                    }, {
+                        gt: 200000,
+                        color: '#cc0033'
+                    }],
+                    outOfRange: {
+                        color: '#999'
+                    }
+                },
+                series: {
+                    name: 'transfering',
+                    type: 'line',
+                    data: [5,700,5000,10000,40000,140000,250000],
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 20000
+                        }, {
+                            yAxis: 60000
+                        }, {
+                            yAxis: 200000
+                        }]
+                    }
+                }
+            };
+                transferchart.setOption(transferchartoption, true);*/
+
+        var sunchartchart = echarts.init(document.getElementById("sunchart"));
+        var item1 = {
+            color: '#F54F4A'
+        };
+        var item2 = {
+            color: '#FF8C75'
+        };
+        var item3 = {
+            color: '#FFB499'
+        };
+
+        var sunchartdata = [{
+            name: 'class0',
+            itemStyle: item1,
+            children: [{
+                name: '流失',
+                itemStyle: item2,
+                value: 40
+            }, {
+                name: '未流失',
+                itemStyle: item3,
+                value: 140
+            }]
+        }, {
+            name: 'class2',
+            itemStyle: item1,
+            children: [{
+                name: '流失',
+                itemStyle: item2,
+                value: 70
+            }, {
+                name: '未流失',
+                itemStyle: item3,
+                value: 110
+            }]
+        }, {
+            name: 'class7',
+            itemStyle: item1,
+            children: [{
+                name: '流失',
+                itemStyle: item2,
+                value: 10
+            }, {
+                name: '未流失',
+                itemStyle: item3,
+                value: 60
+            }]
+        }
+        ];
+        sunchartchartoption = {
+            title: {
+                show: true,
+                text: '全用户分类图',
+                x: 'center',
+                y: 'top',
+                padding: 10,
+                itemGap: 8,
+                textStyle: { color: "#fff", fontSize: 24 },
+                subtextStyle: { fontSize: 14 }
+            },
+            series: {
+                radius: ['15%', '90%'],
+                type: 'sunburst',
+                sort: null,
+                highlightPolicy: 'ancestor',
+                data: sunchartdata,
+                label: {
+                    rotate: 'tangential'
+                },
+                levels: [],
+                itemStyle: {
+                    color: '#ddd',
+                    borderWidth: 2
+                }
+            }
+        };
+        sunchartchart.setOption(sunchartchartoption, true);
+
+
+    </script>
+
+    <script type="text/javascript">
+        //echarts大小自适应
+        setTimeout(function () {
+            window.onresize = function () {
+                consumepiechart.resize();
+                sunchartchart.resize();
+                storagechart.resize();
+            }
+        }, 200);
+        $(document).ready(function () {
+            $("#togglediv1").click(function () {
+                if (document.getElementById("main").style.left == "5%")
+                    $("#main").animate({ left: '-90%' });
+                else
+                    $("#main").animate({ left: '5%' });
+            });
+        });
+        /*$(document).ready(function () {
+            $("#togglediv2").click(function () {
+                if (document.getElementById("main").style.left == "-90%")
+                    $("#main").animate({ left: '-185%' });
+                else
+                    $("#main").animate({ left: '-90%' });
+            });
+        });*/
+    </script>
+</body>
+
+</html>
