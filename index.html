@@ -83,7 +83,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 15%;
+            width: 20%;
             height: 98%;
             padding-top: 10px;
             padding-left: 10px;
@@ -94,11 +94,10 @@
 
         #classdata {
             position: absolute;
-            left: 17%;
-            width: 29%;
-            height: 96%;
-            top: 15%;
-            text-align: center;
+            left: 20%;
+            width: 28%;
+            height: 100%;
+            top: 0;display:block;
         }
 
         #predictindex {
@@ -214,7 +213,7 @@
             display: block;
         }*/
 
-        .clearfix:before,
+        /*.clearfix:before,
         .clearfix:after {
             content: "";
             display: block;
@@ -266,7 +265,7 @@
         .classdetail p {
             text-align: center;
             font-size: 1.5rem;
-        }
+        }*/
 
         #canvas {
             z-index: 1;
@@ -315,7 +314,13 @@
     <div id="main">
         <!--主体-->
         <div id='sunchart'></div>
-        <div class="clearfix" id="classdata">
+        <div id="classdata">
+            <div id="sexpie1" style="height:50%;width:50%;top:0;left:0;position:absolute"></div>
+            <div id="sexpie2" style="height:50%;width:50%;top:0;left:50%;position:absolute"></div>
+            <div id="sexpie3" style="height:50%;width:50%;top:50%;left:0;position:absolute"></div>
+            <div id="sexpie4" style="height:50%;width:50%;top:50%;left:50%;position:absolute"></div>
+        </div>
+        <!--<div class="clearfix" id="classdata">
             <div class="classdetail">
                 <h4>CLASS0</h4>
                 <p>1000100070823</p>
@@ -388,7 +393,7 @@
                 <p>1000000758815</p>
                 <p>1000100944618</p>
             </div>
-        </div>
+        </div>-->
         <div id="userinfo">
             <p style="display:inline;font-weight:bold;color:#fff;margin-left:20px">1000000469319</p>
             <p style="display:inline;font-weight:bold;color:#fff">的用户数据</p>
@@ -397,9 +402,13 @@
         <div id='consumepie'></div>
         <div id='predictindex'>
             <p style="font-size:2em;color:#aaa;margin-left:30px">线性回归算法预测存款：</p>
-            <center><p style="font-size:3em;color:#fff">237.5224</p></center>
+            <center>
+                <p style="font-size:3em;color:#fff">237.5224</p>
+            </center>
             <p style="font-size:2em;color:#aaa;margin-left:30px">决策树算法预测存款：</p>
-            <center><p style="font-size:3em;color:#fff">83.7248</p></center>
+            <center>
+                <p style="font-size:3em;color:#fff">83.7248</p>
+            </center>
         </div>
         <div id="consumetoggle">
             <center>
@@ -665,7 +674,7 @@ General tips from Salvatore Previti*/
                 {
                     name: '存款值',
                     type: 'bar',
-                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                    data: [6229.08, 1545.21, 133.152, 83.56, 83.56, 83.5833, 83.63, 83.63, 83.6548, 83.7, 83.7, 83.7248],
                     markPoint: {
                         data: [
                             { type: 'max', name: '最大值' },
@@ -887,67 +896,205 @@ General tips from Salvatore Previti*/
             };
                 transferchart.setOption(transferchartoption, true);*/
 
-        var sunchartchart = echarts.init(document.getElementById("sunchart"), 'customed');
-        var item1 = {
-            color: '#EA5151'
+        var sexpie1chart = echarts.init(document.getElementById("sexpie1"), 'customed');
+        sexpie1chartoption = {
+            title:{
+                text:'稳定客户分布',
+                y:'bottom',
+                x:'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['男', '女']
+            },
+            series: [
+                {
+                    name: '性别分布',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        { value: 0.4757, name: '男' },
+                        { value: 0.5243, name: '女' }
+                    ]
+                }
+            ]
         };
-        var item2 = {
-            color: '#FF7853'
-        };
-        var item3 = {
-            color: '#FFAE57'
-        };
+        sexpie1chart.setOption(sexpie1chartoption, true);
 
-        var sunchartdata = [{
-            name: 'class0',
-            itemStyle: item1,
-            children: [{
-                name: '男',
-                itemStyle: item2,
-                value: 0.5714
-            }, {
-                name: '女',
-                itemStyle: item3,
-                value: 0.4286
-            }]
-        }, {
-            name: 'class2',
-            itemStyle: item1,
-            children: [{
-                name: '男',
-                itemStyle: item2,
-                value: 0.4286
-            }, {
-                name: '女',
-                itemStyle: item3,
-                value: 0.5714
-            }]
-        }, {
-            name: 'class7',
-            itemStyle: item1,
-            children: [{
-                name: '男',
-                itemStyle: item2,
-                value: 0.5833
-            }, {
-                name: '女',
-                itemStyle: item3,
-                value: 0.4167
-            }]
-        }, {
-            name: 'class10',
-            itemStyle: item1,
-            children: [{
-                name: '男',
-                itemStyle: item2,
-                value: 0.5833
-            }, {
-                name: '女',
-                itemStyle: item3,
-                value: 0.4167
-            }]
-        }
-        ];
+        var sexpie2chart = echarts.init(document.getElementById("sexpie2"), 'customed');
+        sexpie2chartoption = {
+            title:{
+                text:'潜力客户分布',
+                y:'bottom',
+                x:'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['男', '女']
+            },
+            series: [
+                {
+                    name: '性别分布',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        { value: 0.5512, name: '男' },
+                        { value: 0.4488, name: '女' }
+                    ]
+                }
+            ]
+        };
+        sexpie2chart.setOption(sexpie2chartoption, true);
+
+        var sexpie3chart = echarts.init(document.getElementById("sexpie3"), 'customed');
+        sexpie3chartoption = {
+            title:{
+                text:'流失客户分布',
+                y:'bottom',
+                x:'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['男', '女']
+            },
+            series: [
+                {
+                    name: '性别分布',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        { value: 0.6078, name: '男' },
+                        { value: 0.3922, name: '女' }
+                    ]
+                }
+            ]
+        };
+        sexpie3chart.setOption(sexpie1chartoption, true);
+
+        var sexpie4chart = echarts.init(document.getElementById("sexpie4"), 'customed');
+        sexpie4chartoption = {
+            title:{
+                text:'获得客户分布',
+                y:'bottom',
+                x:'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['男', '女']
+            },
+            series: [
+                {
+                    name: '性别分布',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        { value: 0.5392, name: '男' },
+                        { value: 0.4608, name: '女' }
+                    ]
+                }
+            ]
+        };
+        sexpie4chart.setOption(sexpie4chartoption, true);
+
+
+
+        var sunchartchart = echarts.init(document.getElementById("sunchart"), 'customed');
         sunchartchartoption = {
             title: {
                 show: true,
@@ -959,21 +1106,63 @@ General tips from Salvatore Previti*/
                 textStyle: { fontSize: 34 },
                 subtextStyle: { fontSize: 14 }
             },
-            series: {
-                radius: ['15%', '90%'],
-                type: 'sunburst',
-                sort: null,
-                highlightPolicy: 'ancestor',
-                data: sunchartdata,
-                label: {
-                    rotate: 'tangential'
-                },
-                levels: [],
-                itemStyle: {
-                    color: '#ddd',
-                    borderWidth: 2
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['稳定', '潜力', '获得', '流失'],
+                selected: {
+                    '稳定': false
                 }
-            }
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['0%', '55%'],
+                    label: {
+                        normal: {
+                            formatter: '  {b|{b}：}{c}  {per|{d}%}  ',
+                            backgroundColor: '#eee',
+                            borderColor: '#aaa',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            rich: {
+                                a: {
+                                    color: '#999',
+                                    lineHeight: 22,
+                                    align: 'center'
+                                },
+                                hr: {
+                                    borderColor: '#aaa',
+                                    width: '100%',
+                                    borderWidth: 0.5,
+                                    height: 0
+                                },
+                                b: {
+                                    fontSize: 16,
+                                    lineHeight: 33
+                                },
+                                per: {
+                                    color: '#eee',
+                                    backgroundColor: '#334455',
+                                    padding: [2, 4],
+                                    borderRadius: 2
+                                }
+                            }
+                        }
+                    },
+                    data: [
+                        { value: 10153, name: '稳定' },
+                        { value: 24, name: '潜力' },
+                        { value: 12, name: '流失' },
+                        { value: 93, name: '获得' }
+                    ]
+                }
+            ]
         };
         sunchartchart.setOption(sunchartchartoption, true);
 
