@@ -50,7 +50,7 @@
             width: 185%;
             height: 84%;
 
-            top: 8%;
+            top: 11%;
             left: 5%;
             position: absolute;
             background-color: rgba(32, 32, 32, 0.98);
@@ -395,17 +395,17 @@
             </div>
         </div>-->
         <div id="userinfo">
-            <p style="display:inline;font-weight:bold;color:#fff;margin-left:20px">1000000469319</p>
-            <p style="display:inline;font-weight:bold;color:#fff">的用户数据</p>
+            <p style="display:inline;font-weight:bold;color:#fff;margin-left:200px">ID1</p>
+            <p style="display:inline;font-weight:bold;color:#fff">用户数据</p>
         </div>
         <div id='storage'></div>
         <div id='consumepie'></div>
         <div id='predictindex'>
-            <p style="font-size:2em;color:#aaa;margin-left:30px">线性回归算法预测存款：</p>
+            <p style="font-size:2em;color:#aaa;margin-left:30px">算法1预测存款：</p>
             <center>
                 <p style="font-size:3em;color:#fff">237.5224</p>
             </center>
-            <p style="font-size:2em;color:#aaa;margin-left:30px">决策树算法预测存款：</p>
+            <p style="font-size:2em;color:#aaa;margin-left:30px">算法2预测存款：</p>
             <center>
                 <p style="font-size:3em;color:#fff">83.7248</p>
             </center>
@@ -899,7 +899,7 @@ General tips from Salvatore Previti*/
         var sexpie1chart = echarts.init(document.getElementById("sexpie1"), 'customed');
         sexpie1chartoption = {
             title:{
-                text:'稳定客户分布',
+                text:'储蓄值稳定客户分布',
                 y:'bottom',
                 x:'center'
             },
@@ -909,14 +909,14 @@ General tips from Salvatore Previti*/
             },
             legend: {
                 orient: 'vertical',
-                x: 'left',
+                x: '22%',
                 data: ['男', '女']
             },
             series: [
                 {
                     name: '性别分布',
                     type: 'pie',
-                    radius: ['50%', '70%'],
+                    radius: ['35%', '55%'],
                     avoidLabelOverlap: false,
                     label: {
                         normal: {
@@ -948,7 +948,7 @@ General tips from Salvatore Previti*/
         var sexpie2chart = echarts.init(document.getElementById("sexpie2"), 'customed');
         sexpie2chartoption = {
             title:{
-                text:'潜力客户分布',
+                text:'储蓄值波动客户分布',
                 y:'bottom',
                 x:'center'
             },
@@ -958,14 +958,14 @@ General tips from Salvatore Previti*/
             },
             legend: {
                 orient: 'vertical',
-                x: 'left',
+                x: '22%',
                 data: ['男', '女']
             },
             series: [
                 {
                     name: '性别分布',
                     type: 'pie',
-                    radius: ['50%', '70%'],
+                    radius: ['35%', '55%'],
                     avoidLabelOverlap: false,
                     label: {
                         normal: {
@@ -997,7 +997,7 @@ General tips from Salvatore Previti*/
         var sexpie3chart = echarts.init(document.getElementById("sexpie3"), 'customed');
         sexpie3chartoption = {
             title:{
-                text:'流失客户分布',
+                text:'储蓄值下降客户分布',
                 y:'bottom',
                 x:'center'
             },
@@ -1007,14 +1007,14 @@ General tips from Salvatore Previti*/
             },
             legend: {
                 orient: 'vertical',
-                x: 'left',
+                x: '22%',
                 data: ['男', '女']
             },
             series: [
                 {
                     name: '性别分布',
                     type: 'pie',
-                    radius: ['50%', '70%'],
+                    radius: ['35%', '55%'],
                     avoidLabelOverlap: false,
                     label: {
                         normal: {
@@ -1046,7 +1046,7 @@ General tips from Salvatore Previti*/
         var sexpie4chart = echarts.init(document.getElementById("sexpie4"), 'customed');
         sexpie4chartoption = {
             title:{
-                text:'获得客户分布',
+                text:'储蓄值稳定上升客户分布',
                 y:'bottom',
                 x:'center'
             },
@@ -1056,14 +1056,14 @@ General tips from Salvatore Previti*/
             },
             legend: {
                 orient: 'vertical',
-                x: 'left',
+                x: '22%',
                 data: ['男', '女']
             },
             series: [
                 {
                     name: '性别分布',
                     type: 'pie',
-                    radius: ['50%', '70%'],
+                    radius: ['35%', '55%'],
                     avoidLabelOverlap: false,
                     label: {
                         normal: {
@@ -1113,9 +1113,9 @@ General tips from Salvatore Previti*/
             legend: {
                 orient: 'vertical',
                 x: 'left',
-                data: ['稳定', '潜力', '获得', '流失'],
+                data: ['储蓄值稳定客户', '储蓄值波动客户', '储蓄值稳定上升客户', '储蓄值下降客户'],
                 selected: {
-                    '稳定': false
+                    '储蓄值稳定客户': false
                 }
             },
             series: [
@@ -1156,10 +1156,10 @@ General tips from Salvatore Previti*/
                         }
                     },
                     data: [
-                        { value: 10153, name: '稳定' },
-                        { value: 24, name: '潜力' },
-                        { value: 12, name: '流失' },
-                        { value: 93, name: '获得' }
+                        { value: 10153, name: '储蓄值稳定客户' },
+                        { value: 24, name: '储蓄值波动客户' },
+                        { value: 12, name: '储蓄值下降客户' },
+                        { value: 93, name: '储蓄值稳定上升客户' }
                     ]
                 }
             ]
