@@ -1249,7 +1249,7 @@ General tips from Salvatore Previti*/
                 storagechart.resize();
             }
         }, 200);
-        $(document).bind("click", '#togglediv1', function(){
+        /*$(document).bind("click", '#togglediv1', function(){
                 if (document.getElementById("main").style.left == "5%") {
                     $("#main").animate({ left: '-90%' });
                     document.getElementById("togglearrow1").className = "arrow arrow-left";
@@ -1258,8 +1258,8 @@ General tips from Salvatore Previti*/
                     $("#main").animate({ left: '5%' });
                     document.getElementById("togglearrow1").className = "arrow arrow-right";
                 }
-            });
-        /*$(document).ready(function () {
+            });*/
+        $(document).ready(function () {
             $("#togglediv1").click(function () {
                 if (document.getElementById("main").style.left == "5%") {
                     $("#main").animate({ left: '-90%' });
@@ -1270,7 +1270,7 @@ General tips from Salvatore Previti*/
                     document.getElementById("togglearrow1").className = "arrow arrow-right";
                 }
             });
-        });*/
+        });
         $(document).ready(function () {
             $("#togglediv2").click(function () {
                 if (document.getElementById("main").style.left == "-90%") {
