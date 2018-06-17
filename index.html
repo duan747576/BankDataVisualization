@@ -354,11 +354,11 @@
         <div id='predictindex'>
             <p style="font-size:2em;color:#aaa;margin-left:30px">预测存款：</p>
             <center>
-                <p style="font-size:3em;color:#fff">83.7248</p>
+                <p style="font-size:3em;color:#fff">261081</p>
             </center>
             <p style="font-size:2em;color:#aaa;margin-left:30px">误差值：</p>
             <center>
-                <p style="font-size:3em;color:#fff">10</p>
+                <p style="font-size:3em;color:#fff">1</p>
             </center>
         </div>
         <div id="consumetoggle">
@@ -717,6 +717,16 @@ General tips from Salvatore Previti*/
             ]
         };
         allpiechart.setOption(allpiechartoption, true);
+
+        /*allpiechart.on('click',function (param) {
+            if (document.getElementById("main").style.left == "5%") {
+                    $("#main").animate({ left: '-90%' });
+                    document.getElementById("togglearrow1").className = "arrow arrow-left";
+                };
+            if (param.name=='')
+        });*/
+
+
         /*
         稳定类1     稳定类2     稳定类3     稳定类4     稳定类5     
         class10     class2      class0      class7      class3
@@ -907,7 +917,9 @@ General tips from Salvatore Previti*/
                 }
             },
             legend: {
-                data: ['稳定类1', '稳定类2', '稳定类3', '稳定类4', '稳定类5']
+                data: ['五月至九月平均水平', '十月至次年三月平均水平', '平均水平'],
+                orient: 'vertical',
+                left: 'right',
             },
             grid: {
                 left: '3%',
@@ -943,7 +955,7 @@ General tips from Salvatore Previti*/
         };
         stablegroupchart.setOption(stablegroupchartoption, true);
 
-        echarts.connect([classClasschart, stablegroupchart,classStatisticschart]);
+        echarts.connect([classClasschart, stablegroupchart, classStatisticschart]);
 
         var storagechart = echarts.init(document.getElementById("storage"), 'customed');
         storagechartoption = {
@@ -979,7 +991,7 @@ General tips from Salvatore Previti*/
                 {
                     name: '存款值',
                     type: 'bar',
-                    data: [6229.08, 1545.21, 133.152, 83.56, 83.56, 83.5833, 83.63, 83.63, 83.6548, 83.7, 83.7, 83.7248],
+                    data: [242954, 232357, 133257, 132289, 130221, 129958, 130703, 130703, 130703, 202372, 243904, 261082],
                     markPoint: {
                         data: [
                             { type: 'max', name: '最大值' },
@@ -1001,12 +1013,12 @@ General tips from Salvatore Previti*/
                     markPoint: {
                         data: [
                             {
-                                coord: [11, 83.7248],
-                                value: 83.7248
+                                coord: [11, 261081],
+                                value: 261081
                             }
                         ]
                     },
-                    data: [null, null, null, null, null, null, null, null, null, null, null, 83.7248]
+                    data: [null, null, null, null, null, null, null, null, null, null, null, 261081]
                 },
             ]
         };
@@ -1237,7 +1249,17 @@ General tips from Salvatore Previti*/
                 storagechart.resize();
             }
         }, 200);
-        $(document).ready(function () {
+        $(document).bind("click", '#togglediv1', function(){
+                if (document.getElementById("main").style.left == "5%") {
+                    $("#main").animate({ left: '-90%' });
+                    document.getElementById("togglearrow1").className = "arrow arrow-left";
+                }
+                else {
+                    $("#main").animate({ left: '5%' });
+                    document.getElementById("togglearrow1").className = "arrow arrow-right";
+                }
+            });
+        /*$(document).ready(function () {
             $("#togglediv1").click(function () {
                 if (document.getElementById("main").style.left == "5%") {
                     $("#main").animate({ left: '-90%' });
@@ -1248,7 +1270,7 @@ General tips from Salvatore Previti*/
                     document.getElementById("togglearrow1").className = "arrow arrow-right";
                 }
             });
-        });
+        });*/
         $(document).ready(function () {
             $("#togglediv2").click(function () {
                 if (document.getElementById("main").style.left == "-90%") {
